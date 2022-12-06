@@ -322,6 +322,62 @@
                 </div>
             </div>
         </div>
-
+        
+        <!-- Mobile Filter Menu -->
+        <div class="filter-nav js-filter-nav filter-nav-sm">
+            <div class="filter-nav__list js-filter-nav__list">
+                <h3 class="mt-0">Showing <span class="text-primary">12</span> Products</h3>
+                <div class="col-md-4 order-md-1 col-lg-3">
+                    <div id="product-filters-mobile">
+                        <?php if (isset($products['filters']) && !empty($products['filters'])) { ?>
+                            <div class="accordion" id="accordionExample">
+                                <?php foreach ($products['filters'] as $key => $row) {
+                                    $row_attr_name = str_replace(' ', '-', $row['name']);
+                                    $attribute_name = isset($_GET[strtolower('filter-' . $row_attr_name)]) ? $this->input->get(strtolower('filter-' . $row_attr_name), true) : 'null';
+                                    $selected_attributes = explode('|', $attribute_name);
+                                    $attribute_values = explode(',', $row['attribute_values']);
+                                    $attribute_values_id = explode(',', $row['attribute_values_id']);
+                                ?>
+                                    <div class="card-custom">
+                                        <div class="card-header-custom" id="headingOne">
+                                            <h2 class="mb-0">
+                                                <a class="collapse-arrow btn btn-link collapsed" data-toggle="collapse" data-target="#m<?= $key ?>" aria-expanded="false" aria-controls="#m<?= $key ?>"><?= html_escape($row['name']) ?><i class="fa fa-angle-down rotate"></i></a>
+                                            </h2>
+                                        </div>
+                                        <div id="m<?= $key ?>" class="collapse <?= ($attribute_name != 'null') ? 'show' : '' ?>" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body-custom">
+                                                <?php foreach ($attribute_values as $key => $values) {
+                                                    $values = strtolower($values);
+                                                ?>
+                                                    <div class="input-container d-flex">
+                                                        <?= form_checkbox(
+                                                            $values,
+                                                            $values,
+                                                            (in_array($values, $selected_attributes)) ? TRUE : FALSE,
+                                                            array(
+                                                                'class' => 'toggle-input product_attributes',
+                                                                'id' => 'm' . $row_attr_name . ' ' . $values,
+                                                                'data-attribute' => strtolower($row['name']),
+                                                            )
+                                                        ) ?>
+                                                        <label class="toggle checkbox" for="<?= 'm' . $values ?>">
+                                                            <div class="toggle-inner"></div>
+                                                        </label>
+                                                        <?= form_label($values, 'm' . $row_attr_name . ' ' . $values, array('class' => 'text-label')) ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="text-center">
+                        <button class="button button-rounded button-warning product_filter_btn"><?= !empty($this->lang->line('filter')) ? $this->lang->line('filter') : 'Filter' ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>                
     </div>
 </section>
