@@ -184,7 +184,67 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile Product Image Slider -->
+        <div class="col-12 col-md-6 product-preview-image-section-sm">
+            <div class=" swiper-container preview-image-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide text-center"><img src="<?= $product['product'][0]['image'] ?>"></div>
+                    <?php
+                    if (!empty($product['product'][0]['other_images']) && isset($product['product'][0]['other_images'])) {
+                        foreach ($product['product'][0]['other_images'] as $other_image) { ?>
+                            <div class="swiper-slide text-center"><img src="<?= $other_image ?>"></div>
+                    <?php }
+                    } ?>
+                    <?php if (!empty($variant_images_md)) {
+                        foreach ($variant_images_md as $variant_images) {
+                            if (!empty($variant_images)) {
+                                foreach ($variant_images as $image) {
+                    ?>
+                                    <div class="swiper-slide text-center"><img src="<?= $image ?>" data-zoom-image=""></div>
 
+                    <?php }
+                            }
+                        }
+                    } ?>
+                    <?php
+                    if (isset($product['product'][0]['video_type']) && !empty($product['product'][0]['video_type'])) {
+                        $total_images++;
+                    ?>
+                        <div class="swiper-slide">
+                            <div class='product-view-grid'>
+                                <div class='product-view-image'>
+                                    <div class='product-view-image-container'>
+                                        <?php if ($product['product'][0]['video_type'] == 'self_hosted') { ?>
+                                            <video controls width="320" height="240" src="<?= $product['product'][0]['video'] ?>">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        <?php } else if ($product['product'][0]['video_type'] == 'youtube' || $product['product'][0]['video_type'] == 'vimeo') {
+                                            if ($product['product'][0]['video_type'] == 'vimeo') {
+                                                $url =  explode("/", $product['product'][0]['video']);
+                                                $id = end($url);
+                                                $url = 'https://player.vimeo.com/video/' . $id;
+                                            } else if ($product['product'][0]['video_type'] == 'youtube') {
+                                                if (strpos($product['product'][0]['video'], 'watch?v=') !== false) {
+                                                    $url = str_replace("watch?v=", "embed/", $product['product'][0]['video']);
+                                                } else {
+                                                    $url = $product['product'][0]['video'];
+                                                }
+                                            } else {
+                                                $url = $product['product'][0]['video'];
+                                            }
+                                        ?>
+                                            <iframe width="560" height="315" src="<?= $url ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="swiper-pagination preview-image-swiper-pagination text-center"></div>
+            </div>
+        </div>
         
         <div class="col-12 row mt-4">
             <nav class="w-100">
