@@ -245,6 +245,191 @@
                 <div class="swiper-pagination preview-image-swiper-pagination text-center"></div>
             </div>
         </div>
+        <div class="col-12 col-md-6 product-page-details">
+            <h3 class="my-3 product-title">
+                <p itemprop="name"><?= ucfirst($product['product'][0]['name']) ?></p>
+            </h3>
+            <p itemprop="description"><?= (isset($product['product'][0]['short_description']) && !empty($product['product'][0]['short_description'])) ? output_escaping(str_replace('\r\n', '&#13;&#10;', $product['product'][0]['short_description'])) : "" ?></p>
+            <?php
+            $indicator = (isset($product['product'][0]['indicator']) && !empty($product['product'][0]['indicator']) ? $product['product'][0]['indicator'] : '');
+            if ($indicator == '1') { ?>
+                <span class="badge badge-success">Veg</span>
+            <?php } elseif ($indicator == '2') { ?>
+                <span class="badge badge-danger">Non veg</span>
+            <?php } ?>
+            <hr>
+            <?php if (isset($product['product'][0]['rating']) && isset($product['product'][0]['no_of_ratings']) && !empty($product['product'][0]['no_of_ratings']) &&  !empty($product['product'][0]['rating']) && $product['product'][0]['no_of_ratings'] != "") { ?>
+                <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                    <div class="col-md-12 mb-3 product-rating-small  pl-0">
+                        <meta itemprop="reviewCount" content="<?= $product['product'][0]['no_of_ratings'] ?>" />
+                        <meta itemprop="ratingValue" content="<?= $product['product'][0]['rating'] ?>" />
+                        <input type="text" class="kv-fa rating-loading" value="<?= $product['product'][0]['rating'] ?>" data-size="sm" title="" readonly>
+                        <span class="my-auto mx-3"> ( <?= $product['product'][0]['no_of_ratings'] ?> <?= !empty($this->lang->line('reviews')) ? $this->lang->line('reviews') : 'reviews' ?> ) </span>
+                    </div>
+                </div>
+            <?php } else { ?>
+                <div class="col-md-12 mb-3 product-rating-small  pl-0">
+                    <input type="text" class="kv-fa rating-loading" value="<?= $product['product'][0]['rating'] ?>" data-size="sm" title="" readonly>
+                    <span class="my-auto mx-3"> ( <?= $product['product'][0]['no_of_ratings'] ?> <?= !empty($this->lang->line('reviews')) ? $this->lang->line('reviews') : 'reviews' ?> ) </span>
+                </div>
+            <?php } ?>
+            <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="price" content="<?= $product['product'][0]['variants'][0]['price']; ?>" />
+                <meta itemprop="priceCurrency" content="<?= $settings['currency'] ?>" />
+            </div>
+            <?php $price = get_price_range_of_product($product['product'][0]['id']);
+            if ($product['product'][0]['type'] == "simple_product") { ?>
+                <p class="mb-0 mt-2 price" id="price">
+                    <i><?php $price = get_price_range_of_product($product['product'][0]['id']);
+                        echo $price['range'];
+                        ?>
+                        <sup><span class="special-price striped-price"><s><?= !empty($product['product'][0]['min_max_price']['special_price']) && $product['product'][0]['min_max_price']['special_price'] != NULL  ? '<i>' . $settings['currency'] . '</i>' . number_format($product['product'][0]['min_max_price']['min_price']) : '' ?></s></span></sup>
+                </p>
+                <p class="mb-0 mt-2 price d-none" id="price">
+                    <?php $price = get_price_range_of_product($product['product'][0]['id']); ?>
+                </p>
+            <?php } else { ?>
+                <p class="mb-0 mt-2 price">
+                    <?php $price = get_price_range_of_product($product['product'][0]['id']); ?>
+                    <span id="price">
+                        <?php $price = get_price_range_of_product($product['product'][0]['id']);
+                        echo $price['range'];
+                        ?>
+                    </span>
+                    <sup>
+                        <span class="special-price striped-price text-danger" id="product-striped-price-div">
+                            <s id="striped-price"></s>
+                        </span></sup>
+                </p>
+            <?php }
+            $color_code = $style = "";
+            $product['product'][0]['variant_attributes'] = array_values($product['product'][0]['variant_attributes']);
+
+            if (isset($product['product'][0]['variant_attributes']) && !empty($product['product'][0]['variant_attributes'])) { ?>
+
+                <?php
+                foreach ($product['product'][0]['variant_attributes'] as $attribute) {
+                    $attribute_values = explode(',', $attribute['values']);
+                    $attribute_ids = explode(',', $attribute['ids']);
+                    $swatche_types = explode(',', $attribute['swatche_type']);
+                    $swatche_values = explode(',', $attribute['swatche_value']);
+                    for ($i = 0; $i < count($swatche_types); $i++) {
+                        if (!empty($swatche_types[$i])) {
+                            $style = '<style> .product-page-details .btn-group>.active { background-color: #ffffff; color: #000000; border: 1px solid black;}</style>';
+                        } else if ($swatche_types[$i] == 0) {
+                            $style1 = '<style> .product-page-details .btn-group>.active { background-color: var(--primary-color);color: white!important;}</style>';
+                        }
+                    }
+                ?>
+                    <p class="mb-1 mt-1"><span class="text-muted"><small>(Inclusive of all taxes)</small></span></p>
+                    <h4 class="mt-2"><?= $attribute['attr_name'] ?></h4>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="<?= $attribute['attr_name'] ?>">
+                        <?php foreach ($attribute_values as $key => $row) {
+                            if ($swatche_types[$key] == "1") {
+                                echo '<style> .product-page-details .btn-group>.active { border: 1px solid black;}</style>';
+                                $color_code = "style='background-color:" . $swatche_values[$key] . ";'";  ?>
+                                <label class="btn text-center fullCircle " <?= $color_code ?>>
+                                    <input type="radio" name="<?= $attribute['attr_name'] ?>" value="<?= $attribute_ids[$key] ?>" autocomplete="off" class="attributes">
+                                </label>
+                            <?php } else if ($swatche_types[$key] == "2") { ?>
+                                <?= $style ?>
+                                <label class="btn text-center ">
+                                    <img class="swatche-image" src="<?= $swatche_values[$key] ?>">
+                                    <input type="radio" name="<?= $attribute['attr_name'] ?>" value="<?= $attribute_ids[$key] ?>" autocomplete="off" class="attributes">
+                                    <br>
+                                </label>
+                            <?php } else { ?>
+                                <?= '<style> .product-page-details .btn-group>.active { background-color: var(--primary-color);color: white!important;}</style>'; ?>
+                                <label class="btn btn-default text-center">
+                                    <?= $row ?>
+                                    <input type="radio" name="<?= $attribute['attr_name'] ?>" value="<?= $attribute_ids[$key] ?>" autocomplete="off" class="attributes">
+                                    <br>
+                                </label>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                <?php
+                }
+            }
+            if (!empty($product['product'][0]['variants']) && isset($product['product'][0]['variants'])) {
+                $total_images = 1;
+                foreach ($product['product'][0]['variants'] as $variant) {
+                ?>
+                    <input type="hidden" class="variants" name="variants_ids" data-image-index="<?= $total_images ?>" data-name="" value="<?= $variant['variant_ids'] ?>" data-id="<?= $variant['id'] ?>" data-price="<?= $variant['price'] ?>" data-special_price="<?= $variant['special_price'] ?>" />
+            <?php $total_images += count($variant['images']);
+                }
+            } ?>
+
+            <!-- <form class="mt-2" id="validate-zipcode-form" method="POST">
+                <div class="form-row">
+                    <div class=" col-md-6">
+                        <input type="hidden" name="product_id" value="<?= $product['product'][0]['id'] ?>">
+                        <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" name="zipcode" autocomplete="off" required value="<?= $product['product'][0]['zipcode']; ?>">
+                    </div>
+                    <button type="submit" class="button button-primary-outline" id="validate_zipcode">Check Availability</button>
+                </div>
+                <div class="mt-2" id="error_box">
+                    <?php if (!empty($product['product'][0]['zipcode'])) { ?>
+                        <b class="text-<?= ($product['product'][0]['is_deliverable']) ? "success" : "danger" ?>">Product is <?= ($product['product'][0]['is_deliverable']) ? "" : "not" ?> delivarable on &quot; <?= $product['product'][0]['zipcode']; ?> &quot; </b>
+                    <?php } ?>
+                </div>
+
+            </form> -->
+
+            <div class="mt-2" style="font-size:16px; font-weight:bold">
+                <?php if ($product['product'][0]['availability'] == 1 && $product['product'][0]['stock'] > 0   )  { ?>
+                    <strong class="text-success"> In Stock </strong>
+                <?php }else{ ?>
+                    <strong class="text-danger"> Out Of Stock </strong>
+                <?php } ?>
+                </div>
+            <!--end profile -->
+            <div class="num-block skin-2 py-4">
+                <div class="num-in">
+                    <span class="minus dis" data-min="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['minimum_order_quantity'])) ? $product['product'][0]['minimum_order_quantity'] : 1 ?>" data-step="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['quantity_step_size'])) ? $product['product'][0]['quantity_step_size'] : 1 ?>"></span>
+                    <input type="text" name="qty" class="in-num" value="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['minimum_order_quantity'])) ? $product['product'][0]['minimum_order_quantity'] : 1 ?>" data-step="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['quantity_step_size'])) ? $product['product'][0]['quantity_step_size'] : 1 ?>" data-min="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['minimum_order_quantity'])) ? $product['product'][0]['minimum_order_quantity'] : 1 ?>" data-max="<?= (isset($product['product'][0]['total_allowed_quantity']) && !empty($product['product'][0]['total_allowed_quantity'])) ? $product['product'][0]['total_allowed_quantity'] : '' ?>">
+                    <span class="plus" data-max="<?= (isset($product['product'][0]['total_allowed_quantity']) && !empty($product['product'][0]['total_allowed_quantity'])) ? $product['product'][0]['total_allowed_quantity'] : '' ?> " data-step="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['quantity_step_size'])) ? $product['product'][0]['quantity_step_size'] : 1 ?>"></span>
+                </div>
+            </div>
+            <div class="bg-gray mt-2 mb-2">
+                <?php ($product['product'][0]['tax_percentage'] != 0) ? "Tax" . $product['product'][0]['tax_percentage'] : '' ?>
+            </div>
+            <input type="hidden" class="variants_data" id="variants_data" data-name="<?= $product['product'][0]['name'] ?>" data-image="<?= $product['product'][0]['image'] ?>" data-id="<?= $variant['id'] ?>" data-price="<?= $variant['price'] ?>" data-special_price="<?= $variant['special_price'] ?>">
+            <div class="" id="result"></div>
+            <div class="pt-3 text-md-left">
+                <?php
+                if (count($product['product'][0]['variants']) <= 1) {
+                    $variant_id = $product['product'][0]['variants'][0]['id'];
+                } else {
+                    $variant_id = "";
+                }
+                ?>
+
+                <button type="button" name="add_cart" class="buttons btn-6-6 extra-small m-0 add_to_cart" id="add_cart" data-product-id="<?= $product['product'][0]['id'] ?>" data-product-title="<?= $product['product'][0]['name'] ?>" data-product-image="<?= $product['product'][0]['image'] ?>" data-product-price="<?= $variant['special_price']; ?>" data-product-description="<?= $product['product'][0]['short_description']; ?>" data-step="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['quantity_step_size'])) ? $product['product'][0]['quantity_step_size'] : 1 ?>" data-min="<?= (isset($product['product'][0]['minimum_order_quantity']) && !empty($product['product'][0]['minimum_order_quantity'])) ? $product['product'][0]['minimum_order_quantity'] : 1 ?>" data-max="<?= (isset($product['product'][0]['total_allowed_quantity']) && !empty($product['product'][0]['total_allowed_quantity'])) ? $product['product'][0]['total_allowed_quantity'] : '' ?>" data-product-variant-id="<?= $variant_id ?>">
+                    <i class="fas fa-cart-plus"></i> <?= !empty($this->lang->line('add_to_cart')) ? $this->lang->line('add_to_cart') : 'Add to Cart' ?>
+                </button>
+                <?php if ($product['product'][0]['is_favorite'] == 0) { ?>
+                    <button class="buttons btn-6-1 extra-small m-0 add-fav" id="add_to_favorite_btn" data-product-id="<?= $product['product'][0]['id'] ?>">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span><?= !empty($this->lang->line('add_to_favorite')) ? $this->lang->line('add_to_favorite') : 'Add to Favorite' ?></span>
+                    </button>
+                <?php } else { ?>
+                    <button class="buttons btn-6-1 extra-small m-0 remove-fav" id="add_to_favorite_btn" data-product-id="<?= $product['product'][0]['id'] ?>">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span><?= !empty($this->lang->line('remove_from_favorite')) ? $this->lang->line('remove_from_favorite') : 'Remove from Favorite' ?></span>
+                    </button>
+                <?php } ?>
+            </div>
+            <?php if (isset($product['product'][0]['tags']) && !empty($product['product'][0]['tags'])) { ?>
+                <div class="mt-2">
+                    Tags
+                    <?php foreach ($product['product'][0]['tags'] as $tag) { ?>
+                        <a href="<?= base_url('products/tags/' . $tag) ?>"><span class="badge badge-secondary p-1"><?= $tag ?></span></a>
+                    <?php } ?>
+                    </span>
+                </div>
+            <?php } ?>
+        </div>
         
         <div class="col-12 row mt-4">
             <nav class="w-100">
