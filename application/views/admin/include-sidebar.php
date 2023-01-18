@@ -256,7 +256,362 @@
                         </a>
                     </li>
                 <?php } ?>
-                
+                <?php if (has_permissions('read', 'featured_section')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link menu-open">
+                            <i class="nav-icon fas fa-layer-group text-danger"></i>
+                            <p>
+                                Featured Sections
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/featured-sections/') ?>" class="nav-link">
+                                    <i class="fas fa-folder-plus nav-icon"></i>
+                                    <p>Manage Sections</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/featured-sections/section-order') ?>" class="nav-link">
+                                    <i class="fa fa-bars nav-icon"></i>
+                                    <p>Sections Order</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if (has_permissions('read', 'customers')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-user text-success"></i>
+                            <p>
+                                Customer
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/customer/') ?>" class="nav-link">
+                                    <i class="fas fa-users nav-icon"></i>
+                                    <p> View Customers </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/customer/addresses') ?>" class="nav-link">
+                                    <i class="far fa-address-book nav-icon"></i>
+                                    <p> Addresses </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/transaction/view-transaction') ?>" class="nav-link">
+                                    <i class="fas fa-money-bill-wave nav-icon "></i>
+                                    <p> Transactions </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/transaction/customer-wallet') ?>" class="nav-link">
+                                    <i class="fas fa-wallet nav-icon "></i>
+                                    <p>Wallet Transactions</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if (has_permissions('read', 'return_request')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="<?= base_url('admin/return-request') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-undo text-warning"></i>
+                            <p>
+                                Return Requests
+                            </p>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if (has_permissions('read', 'delivery_boy') || has_permissions('read', 'fund_transfer')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-id-card-alt text-info"></i>
+                            <p>
+                                Delivery Boys
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <?php if (has_permissions('read', 'delivery_boy')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/delivery-boys/manage-delivery-boy') ?>" class="nav-link text-sm">
+                                        <i class="fas fa-user-cog nav-icon "></i>
+                                        <p> Manage Delivery Boys </p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                            <?php if (has_permissions('read', 'fund_transfer')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/fund-transfer/') ?>" class="nav-link">
+                                        <i class="fa fa-rupee-sign nav-icon "></i>
+                                        <p>Fund Transfer</p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                            <?php if (has_permissions('read', 'delivery_boy')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/delivery-boys/manage-cash') ?>" class="nav-link text-sm">
+                                        <i class="fas fa-money-bill-alt nav-icon "></i>
+                                        <p> Manage Cash Collection </p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+
+                <!-- I will permission for this module later. -->
+                <?php if (has_permissions('read', 'return_request')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="<?= base_url('admin/payment-request') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-money-bill-wave text-danger"></i>
+                            <p>Payment Request</p>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if (has_permissions('read', 'send_notification')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="<?= base_url('admin/Notification-settings/manage-notifications') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-paper-plane text-success"></i>
+                            <p>
+                                Send Notification
+                            </p>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if (has_permissions('read', 'settings')) { ?>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-wrench text-primary"></i>
+                            <p>
+                                System
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/setting') ?>" class="nav-link">
+                                    <i class="fas fa-store nav-icon "></i>
+                                    <p>Store Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/email-settings') ?>" class="nav-link">
+                                    <i class="fas fa-envelope-open-text nav-icon "></i>
+                                    <p>Email Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/payment-settings') ?>" class="nav-link">
+                                    <i class="fas fa-rupee-sign nav-icon "></i>
+                                    <p>Payment Methods</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/time-slots') ?>" class="nav-link">
+                                    <i class="fas fa-calendar-alt nav-icon "></i>
+                                    <p>Time Slots</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/notification-settings') ?>" class="nav-link">
+                                    <i class="fa fa-bell nav-icon "></i>
+                                    <p>Notification Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/contact-us') ?>" class="nav-link">
+                                    <i class="fa fa-phone-alt nav-icon "></i>
+                                    <p>Contact Us</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/about-us') ?>" class="nav-link">
+                                    <i class="fas fa-info-circle nav-icon "></i>
+                                    <p>About Us</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/privacy-policy') ?>" class="nav-link">
+                                    <i class="fa fa-user-secret nav-icon "></i>
+                                    <p>Privacy Policy</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/privacy-policy/return-policy') ?>" class="nav-link">
+                                    <i class="fa fa-undo nav-icon "></i>
+                                    <p>Return Policy</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/privacy-policy/shipping-policy') ?>" class="nav-link">
+                                    <i class="fa fa-shipping-fast nav-icon "></i>
+                                    <p>Shipping Policy</p>
+                                </a>
+                            </li>
+                            <li class="nav-item text-sm">
+                                <a href="<?= base_url('admin/admin-privacy-policy') ?>" class="nav-link">
+                                    <i class="fa fa-exclamation-triangle nav-icon  "></i>
+                                    <p>Admin Policies</p>
+                                </a>
+                            </li>
+                            <li class="nav-item text-sm">
+                                <a href="<?= base_url('admin/delivery-boy-privacy-policy') ?>" class="nav-link">
+                                    <i class="fa fa-exclamation-triangle nav-icon  "></i>
+                                    <p>Delivery Boy Policies</p>
+                                </a>
+                            </li>
+                            <li class="nav-item text-sm">
+                                <a href="<?= base_url('admin/client-api-keys/') ?>" class="nav-link">
+                                    <i class="fa fa-key nav-icon  "></i>
+                                    <p>Client Api Keys</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/updater') ?>" class="nav-link">
+                                    <i class="fas fa-sync nav-icon "></i>
+                                    <p>System Updater</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/purchase-code') ?>" class="nav-link">
+                                    <i class="fas fa-check nav-icon"></i>
+                                    <p>System Registration</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-globe-asia text-warning"></i>
+                            <p>
+                                Web Settings
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/web-setting') ?>" class="nav-link">
+                                    <i class="fa fa-laptop nav-icon "></i>
+                                    <p>General Settings</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/themes') ?>" class="nav-link">
+                                    <i class="fa fa-palette nav-icon "></i>
+                                    <p>Themes</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/language') ?>" class="nav-link">
+                                    <i class="fa fa-language nav-icon "></i>
+                                    <p>Languages</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin/web-setting/firebase') ?>" class="nav-link">
+                                    <i class="fa fa-language nav-icon "></i>
+                                    <p>Firebase</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if (has_permissions('read', 'area') || has_permissions('read', 'city') || has_permissions('read', 'zipcodes')) { ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-map-marked-alt text-danger"></i>
+                            <p>
+                                Location
+                                <i class="right fas fa-angle-left "></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <?php if (has_permissions('read', 'zipcodes')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/area/manage-zipcodes') ?>" class="nav-link">
+                                        <i class="fa fa-map-pin nav-icon "></i>
+                                        <p>Zipcodes</p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                            <?php if (has_permissions('read', 'city')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/area/manage-cities') ?>" class="nav-link">
+                                        <i class="fa fa-location-arrow nav-icon "></i>
+                                        <p>City</p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                            <?php if (has_permissions('read', 'area')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/area/manage-areas') ?>" class="nav-link">
+                                        <i class="fas fa-street-view nav-icon "></i>
+                                        <p>
+                                            Areas
+                                        </p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                            <?php if (has_permissions('read', 'area') && has_permissions('read', 'city') && has_permissions('read', 'zipcodes')) { ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url('admin/area/location-bulk-upload') ?>" class="nav-link">
+                                        <i class="fas fa-upload nav-icon"></i>
+                                        <p>Bulk upload</p>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-pie nav-icon text-primary"></i>
+                        <p>Reports
+                            <i class="right fas fa-angle-left "></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= base_url('admin/invoice/sales-invoice') ?>" class="nav-link">
+                                <i class="fa fa-chart-line nav-icon "></i>
+                                <p>Sales Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <?php if (has_permissions('read', 'faq')) { ?>
+                    <li class="nav-item">
+                        <a href="<?= base_url('admin/faq/') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-question-circle text-warning"></i>
+                            <p class="text">FAQ</p>
+                        </a>
+                    </li>
+                    <?php }
+                $userData = get_user_permissions($this->session->userdata('user_id'));
+                if (!empty($userData)) {
+                    if ($userData[0]['role'] == 0 || $userData[0]['role'] == 1) {
+                    ?>
+                        <li class="nav-item mb-4">
+                            <a href="<?= base_url('admin/system-users/') ?>" class="nav-link">
+                                <i class="nav-icon fas fa-user-tie text-danger"></i>
+                                <p class="text">System Users</p>
+                            </a>
+                        </li>
+                <?php
+                    }
+                } ?>
+            </ul>    
         </nav>
         <!-- /.sidebar-menu -->
     </div>
