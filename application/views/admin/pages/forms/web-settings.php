@@ -144,7 +144,99 @@
                                 </div>
                                 <hr>
                                 <h4>Social Media Links</h4>
-                                
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="twitter_link">Twitter</label>
+                                        <input type="text" class="form-control" name="twitter_link" value="<?= (isset($web_settings['twitter_link'])) ? output_escaping($web_settings['twitter_link']) : '' ?>" placeholder="Twitter Link" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="facebook_link">Facebook</label>
+                                        <input type="text" class="form-control" name="facebook_link" value="<?= (isset($web_settings['facebook_link'])) ? output_escaping($web_settings['facebook_link']) : '' ?>" placeholder="Facebook Link" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="instagram_link">Instagram</label>
+                                        <input type="text" class="form-control" name="instagram_link" value="<?= (isset($web_settings['instagram_link'])) ? output_escaping($web_settings['instagram_link']) : '' ?>" placeholder="Instagram Link" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="youtube_link">Youtube</label>
+                                        <input type="text" class="form-control" name="youtube_link" value="<?= (isset($web_settings['youtube_link'])) ? output_escaping($web_settings['youtube_link']) : '' ?>" placeholder="Youtube Link" />
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>Feature Section</h4>
+                                <div class="row">
+                                    <h4 class="h4 col-md-12">Shipping</h4>
+                                    <div class="form-group col-md-2 col-sm-4">
+                                        <label for="shipping_mode"> Enable / Disable</label>
+                                        <div class="card-body">
+                                            <input type="checkbox" name="shipping_mode" <?= (isset($web_settings['shipping_mode']) && $web_settings['shipping_mode'] == '1') ? 'Checked' : ''  ?> data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="shipping_title">Title</label>
+                                        <input type="text" class="form-control" name="shipping_title" value="<?= (isset($web_settings['shipping_title'])) ? output_escaping($web_settings['shipping_title']) : '' ?>" placeholder="Shipping Title" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="shipping_description">Description</label>
+                                        <textarea name="shipping_description" class="form-control" id="shipping_description" cols="30" rows="4" placeholder="Shipping Description"><?= (isset($web_settings['shipping_description'])) ? output_escaping($web_settings['shipping_description']) : '' ?></textarea>
+                                    </div>
+
+                                    <h4 class="h4 col-md-12">Returns</h4>
+                                    <div class="form-group col-md-2 col-sm-4">
+                                        <label for="return_mode"> Enable / Disable</label>
+                                        <div class="card-body">
+                                            <input type="checkbox" name="return_mode" <?= (isset($web_settings['return_mode']) && $web_settings['return_mode'] == '1') ? 'Checked' : ''  ?> data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="return_title">Title</label>
+                                        <input type="text" class="form-control" name="return_title" value="<?= (isset($web_settings['return_title'])) ? output_escaping($web_settings['return_title']) : '' ?>" placeholder="Return Title" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="return_description">Description</label>
+                                        <textarea name="return_description" class="form-control" id="return_description" cols="30" rows="4" placeholder="Return Description"><?= (isset($web_settings['return_description'])) ? output_escaping($web_settings['return_description']) : '' ?></textarea>
+                                    </div>
+
+                                    <h4 class="h4 col-md-12">Support</h4>
+                                    <div class="form-group col-md-2 col-sm-4">
+                                        <label for="support_mode"> Enable / Disable</label>
+                                        <div class="card-body">
+                                            <input type="checkbox" name="support_mode" <?= (isset($web_settings['support_mode']) && $web_settings['support_mode'] == '1') ? 'Checked' : ''  ?> data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="support_title">Title</label>
+                                        <input type="text" class="form-control" name="support_title" value="<?= (isset($web_settings['support_title'])) ? output_escaping($web_settings['support_title']) : '' ?>" placeholder="Support Title" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="shipping_description">Description</label>
+                                        <textarea name="support_description" class="form-control" id="support_description" cols="30" rows="4" placeholder="Support Description"><?= (isset($web_settings['support_description'])) ? output_escaping($web_settings['support_description']) : '' ?></textarea>
+                                    </div>
+
+                                    <h4 class="h4 col-md-12">Safety & Security</h4>
+                                    <div class="form-group col-md-2 col-sm-4">
+                                        <label for="safety_security_mode"> Enable / Disable</label>
+                                        <div class="card-body">
+                                            <input type="checkbox" name="safety_security_mode" <?= (isset($web_settings['safety_security_mode']) && $web_settings['safety_security_mode'] == '1') ? 'Checked' : ''  ?> data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="safety_security_title">Title</label>
+                                        <input type="text" class="form-control" name="safety_security_title" value="<?= (isset($web_settings['safety_security_title'])) ? output_escaping($web_settings['safety_security_title']) : '' ?>" placeholder="Safety & Security Title" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="safety_security_description">Description</label>
+                                        <textarea name="safety_security_description" class="form-control" id="safety_security_description" cols="30" rows="4" placeholder="Safety & Security Description"><?= (isset($web_settings['safety_security_description'])) ? output_escaping($web_settings['safety_security_description']) : '' ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="form-group" id="error_box">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                    <button type="submit" class="btn btn-success" id="submit_btn">Update Settings</button>
+                                </div>
                             </div>
                         </form>
                     </div>
